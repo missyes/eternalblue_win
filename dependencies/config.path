@@ -1,0 +1,17 @@
+********************************************************************************************************
+** Configuration Paths for TheFatRat , do not delete anything from this file or program will not work **
+**       if you need to reconfig your tools path , then run ./setup.sh in (TheFatRat directory) .     **
+********************************************************************************************************
+jarsigner
+unzip
+keytool
+/root/Downloads/TheFatRat/tools/android-sdk/zipalign
+/root/Downloads/TheFatRat/tools/proguard5.3.2/lib/proguard
+dx
+aapt
+apktool
+d2j-dex2jar
+msfconsole
+msfvenom
+backdoor-factory
+searchsploit
