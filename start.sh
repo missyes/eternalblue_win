@@ -56,7 +56,7 @@ echo -e $orange "  Would you like to start msf listener now ? (y/n)"
 read qawsed
 case $qawsed in
 y|Y|Yes|yes|YES)
-msfconsole -r tmp/listener.rc
+xterm msfconsole -r tmp/listener.rc
 ;;
 n|no|No|NO)
 echo -e $orange "  After generating, write in terminal: msfconsole -r path/to/listener/*name*.rc"
