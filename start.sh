@@ -11,8 +11,9 @@ BlueF='\e[1;34m' #Biru
 RESET="\033[00m" #normal
 orange='\e[38;5;166m'
 file="dependencies/config.path"
-msfconsole=`sed -n 14p $file`
-msfvenom=`sed -n 15p $file`
+msfconsole=`sed -n 1p $file`
+msfvenom=`sed -n 2p $file`
+python=`sed -n 3p $file`
 #IP addreses setup
 function ipaddr_setup {
 echo -ne $okegreen "  Set your ip : "
@@ -209,6 +210,7 @@ echo
 echo -e $okegreen " Author of exploit worawit https://github.com/worawit"
 echo 
 echo -e $cyan " Design style by Screetsec https://github.com/Screetsec"
+echo -e "framework written by missyes"
 read sadasd
 clear
 menu
@@ -238,7 +240,7 @@ function mtspl() {
 else
    echo -e $red [x]::[warning]:this script require msfconsole installed to work ;
    echo ""
-   echo -e $red [!]::Run setup.sh to install metasploit-framework ;
+   echo -e $red [!]::install metasploit-framework ;
    sleep 0.5
 exit 1
 fi
@@ -252,7 +254,20 @@ else
 
    echo -e $red [x]::[warning]:this script require msfvenom installed to work ;
    echo ""
-   echo -e $red [!]::Run setup.sh to install metasploit-framework ;
+   echo -e $red [!]::install metasploit-framework ;
+   sleep 0.5
+exit 1
+fi
+sleep 0.5
+# check if python exists
+      which $python > /dev/null 2>&1
+      if [ "$?" -eq "0" ]; then
+      echo -e $okegreen [✔]::[Python]: Installation found!;
+else
+
+   echo -e $red [x]::[warning]:this script require python installed to work ;
+   echo ""
+   echo -e $red [!]::install python ;
    sleep 0.5
 exit 1
 fi
@@ -287,4 +302,6 @@ echo ""
 echo -n "Press [Enter] key to continue .............."
 read warning
 clear
+mtspl
+sleep 3
 menu
