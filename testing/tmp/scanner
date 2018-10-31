@@ -1,4 +1,0 @@
-use auxiliary/scanner/smb/smb_ms17_010
-set RHOSTS 192.168.0.107
-set THREADS 12
-run
